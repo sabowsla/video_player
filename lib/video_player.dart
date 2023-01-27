@@ -418,7 +418,7 @@ class VideoPlayerController extends ValueNotifier<VideoPlayerValue> {
         initializingCompleter.completeError(obj);
       }
     }
-
+    eventStream = StreamController<dynamic>.broadcast();
     _eventSubscription = _videoPlayerPlatform
         .videoEventsFor(_textureId)
         .listen(eventListener, onError: errorListener);
