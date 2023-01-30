@@ -412,12 +412,14 @@ class VideoPlayerController extends ValueNotifier<VideoPlayerValue> {
 
     void errorListener(Object obj) {
       final PlatformException e = obj as PlatformException;
+      eventStream?.add(obj);
       value = VideoPlayerValue.erroneous(e.message!);
       _timer?.cancel();
       if (!initializingCompleter.isCompleted) {
         initializingCompleter.completeError(obj);
       }
     }
+
     eventStream = StreamController<dynamic>.broadcast();
     _eventSubscription = _videoPlayerPlatform
         .videoEventsFor(_textureId)
